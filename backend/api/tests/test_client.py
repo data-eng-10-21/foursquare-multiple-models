@@ -1,4 +1,4 @@
-from client import Client
+from adapters.client import Client
 
 # Here we'll test our Client class.  This class is responsible for making a 
 # request to the foursquare api.  It has the following features.
