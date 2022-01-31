@@ -1,4 +1,4 @@
-from venue import Venue
+from api.models.venue import Venue
 
 # Here we test that our venue class is set up properly.  
 # We should have the ability to initialize a Venue instance with the 

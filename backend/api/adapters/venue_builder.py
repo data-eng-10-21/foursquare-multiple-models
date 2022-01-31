@@ -1,5 +1,5 @@
-from venue import Venue
-class VenuesBuilder:
+from api.models.venue import Venue
+class VenueBuilder:
     def __init__(self, venues_from_api):
         self.venues_from_api = venues_from_api
 
