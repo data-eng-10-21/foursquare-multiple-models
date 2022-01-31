@@ -1,8 +1,5 @@
-<<<<<<< HEAD:backend/api/tests/test_client.py
-from adapters.client import Client
-=======
 from api.adapters.client import Client
->>>>>>> solution:backend/tests/adapters/test_client.py
+
 
 # Here we'll test our Client class.  This class is responsible for making a 
 # request to the foursquare api.  It has the following features.
