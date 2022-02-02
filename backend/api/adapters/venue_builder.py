@@ -1,19 +1,22 @@
 from api.models.venue import Venue
 class VenueBuilder:
-    def __init__(self, venues_from_api):
-        self.venues_from_api = venues_from_api
+    def __init__(self, response_venue):
+        self.response_venue = response_venue
+
+    def select_attributes(self):
+        foursquare_id = self.response_venue['id']
+        venue_name = self.response_venue['name']
+        price = self.response_venue['price']['tier']
+        likes = self.response_venue['likes']['count']
+        menu_url = self.response_venue.get('delivery', '')
+        if menu_url:
+            menu_url = menu_url.get('url', '').split('?')[0]
+        vals = [foursquare_id, venue_name, price, likes, menu_url]
+        keys = ['foursquare_id', 'name', 'price', 'likes', 'menu_url']
+        attr = dict(zip(keys, vals))
+        return attr
 
     def run(self):
-        venues = []
-        for venue_from_api in self.venues_from_api:
-            venue_id = venue_from_api['id']
-            venue_name = venue_from_api['name']
-            lat = venue_from_api['location']['lat']
-            long = venue_from_api['location']['lng']
-            category = venue_from_api['categories'][0]['shortName']
-            zip_code = venue_from_api['location'].get('postalCode')
-            venue = Venue(id = venue_id, name = venue_name, 
-                    latitude = lat, longitude = long, 
-                    category = category, zip_code = zip_code)
-            venues.append(venue)
-        return venues
+        attr = self.select_attributes()
+        venue = Venue(**attr)
+        return venue

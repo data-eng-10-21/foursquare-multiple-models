@@ -1,8 +1,11 @@
 class Venue:
-    def __init__(self, id, name, longitude, latitude, zip_code, category):
-        self.id = id
-        self.name = name
-        self.longitude = longitude
-        self.latitude = latitude
-        self.zip_code = zip_code
-        self.category = category
+    columns = ['foursquare_id', 'name', 'price',
+            'rating', 'likes', 'menu_url']
+    __table__ = 'venues'
+    
+    def __init__(self, **kwargs):
+        for key in kwargs.keys():
+            if key not in self.columns:
+                raise f'{key} not in {self.columns}' 
+        for k, v in kwargs.items():
+            setattr(self, k, v)
