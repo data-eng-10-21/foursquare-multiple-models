@@ -1,8 +1,10 @@
 import requests
+from settings import CLIENT_ID, CLIENT_SECRET, DATE
+
 class Client:
-    CLIENT_ID = "ALECV5CBBEHRRKTIQ5ZV143YEXOH3SBLAMU54SPHKGZI1ZKE"
-    CLIENT_SECRET = "3JX3NRGRS2P0KE0NSKPTMCOZOY4MWUU4M3G33BO4XTRJ15SM"
-    DATE = "20190407"
+    CLIENT_ID = CLIENT_ID
+    CLIENT_SECRET = CLIENT_SECRET
+    DATE = DATE
     URL = "https://api.foursquare.com/v2/venues/search"
     SHOW_URL = "https://api.foursquare.com/v2/venues"
 
@@ -16,8 +18,8 @@ class Client:
         params.update(query_params)
         return params
 
-    def request_venues(self):
-        response = requests.get(self.URL, self.full_params())
+    def request_venues(self, query_params = {'ll': "40.7,-74", "query": "tacos"}):
+        response = requests.get(self.URL, self.full_params(query_params))
         return response.json()['response']['venues']
 
     def request_venue(self, venue_id):

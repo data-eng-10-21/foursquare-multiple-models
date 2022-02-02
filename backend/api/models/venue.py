@@ -1,5 +1,6 @@
+from api.lib.orm import build_from_record
 class Venue:
-    columns = ['foursquare_id', 'name', 'price',
+    columns = ['id', 'foursquare_id', 'name', 'price',
             'rating', 'likes', 'menu_url']
     __table__ = 'venues'
     
@@ -9,3 +10,13 @@ class Venue:
                 raise f'{key} not in {self.columns}' 
         for k, v in kwargs.items():
             setattr(self, k, v)
+
+    @classmethod
+    def find_by_foursquare_id(self, foursquare_id, conn):
+        cursor = conn.cursor()
+        cursor.execute('SELECT * from venues where foursquare_id = %s', (foursquare_id,))
+        record = cursor.fetchone()
+        if not record: 
+            return None
+        else:
+            return build_from_record(Venue, record)
