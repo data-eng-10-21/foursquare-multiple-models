@@ -1,3 +1,4 @@
+import api.lib.db as db
 from api.lib.orm import build_from_record
 class Venue:
     columns = ['id', 'foursquare_id', 'name', 'price',
