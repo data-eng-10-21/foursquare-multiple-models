@@ -14,7 +14,7 @@ class VenueBuilder:
         menu_url = self.response_venue.get('delivery', '')
         if menu_url:
             menu_url = menu_url.get('url', '').split('?')[0]
-        rating = self.response_venue['rating']
+        rating = self.response_venue.get('rating', None)
         vals = [foursquare_id, venue_name, price, rating, likes, menu_url]
         keys = ['foursquare_id', 'name', 'price', 'rating', 'likes', 'menu_url']
         attr = dict(zip(keys, vals))
@@ -22,9 +22,12 @@ class VenueBuilder:
 
     def run(self, conn, cursor):
         venue = Venue.find_by_foursquare_id(self.response_venue['id'], conn)
-        if not venue:  
+        if venue:  
+            venue.exists = True
+        else:
             attr = self.select_attributes()
             venue = Venue(**attr)
             venue = save(venue, conn, cursor)
+            venue.exists = False
         return venue
 

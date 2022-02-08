@@ -1,5 +1,5 @@
 import api.lib.db as db
-import api.lib.orm as orm
+from api.lib.orm import save, build_from_record
 import api.models as models
 
 class Category:
@@ -18,7 +18,7 @@ class Category:
         category_query = """SELECT * FROM categories WHERE name = %s """
         cursor.execute(category_query, (name,))
         category_record =  cursor.fetchone()
-        category = orm.build_from_record(self, category_record)
+        category = build_from_record(self, category_record)
         return category
 
     @classmethod
@@ -26,7 +26,16 @@ class Category:
         category = self.find_by_name(name, cursor)
         if not category:
             new_category = models.Category(name = name)
-            category = orm.save(new_category, conn, cursor)
+            category = save(new_category, conn, cursor)
         return category
 
+    # added
+    def venues(self, cursor):
+        venues_query = """SELECT venues.* FROM venues 
+        JOIN venue_categories ON venue_categories.venue_id = venues.id 
+        WHERE venue_categories.category_id = %s"""
+        cursor.execute(venues_query, (self.id,))
+        venue_records = cursor.fetchall()
+        return [build_from_record(models.Venue, record) 
+        for record in venue_records]
     

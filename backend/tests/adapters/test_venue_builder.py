@@ -22,6 +22,14 @@ def test_does_not_change_inputted_venue_when_storing_on_the_instance(clean_table
     builder = VenueBuilder(response_venue)
     assert builder.response_venue == response_venue
 
+def test_select_attributes(clean_tables):
+    builder = VenueBuilder(response_venue)
+    assert builder.select_attributes() == {'foursquare_id': '5b2932a0f5e9d70039787cf2', 
+    'name': 'Los Tacos Al Pastor', 
+    'rating': 7.3,
+    'price': 1, 'likes': 53, 
+    'menu_url': 'https://www.seamless.com/menu/los-tacos-al-pastor-141a-front-st-brooklyn/857049'}
+
 def returns_a_venue(clean_tables):
     builder = VenueBuilder(response_venue)
     venue = builder.run(test_conn, test_cursor)
@@ -36,14 +44,6 @@ def test_extracts_id_name_price_rating_likes_menu_url(clean_tables):
     assert venue.price ==1
     assert round(venue.rating, 1) == round(Decimal(7.3), 1)
     assert venue.menu_url == 'https://www.seamless.com/menu/los-tacos-al-pastor-141a-front-st-brooklyn/857049'
-
-def test_select_attributes(clean_tables):
-    builder = VenueBuilder(response_venue)
-    assert builder.select_attributes() == {'foursquare_id': '5b2932a0f5e9d70039787cf2', 
-    'name': 'Los Tacos Al Pastor', 
-    'rating': 7.3,
-    'price': 1, 'likes': 53, 
-    'menu_url': 'https://www.seamless.com/menu/los-tacos-al-pastor-141a-front-st-brooklyn/857049'}
 
 def test_saves_to_the_db(clean_tables):
     builder = VenueBuilder(response_venue)

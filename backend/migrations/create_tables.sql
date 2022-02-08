@@ -17,6 +17,25 @@ menu_url VARCHAR(255),
 CREATE INDEX IF NOT EXISTS venues_price_index ON venues (price);
 
 
+CREATE TABLE IF NOT EXISTS categories (
+  id serial PRIMARY KEY,
+  name VARCHAR(255) UNIQUE
+);
+
+
+CREATE TABLE IF NOT EXISTS venue_categories (
+  id serial PRIMARY KEY,
+  category_id INTEGER,
+  venue_id INTEGER,
+  CONSTRAINT fk_category
+  FOREIGN KEY (category_id)
+    REFERENCES categories (id)
+  ,
+  CONSTRAINT fk_venue
+  FOREIGN KEY (venue_id)
+    REFERENCES venues (id)
+);
+
 CREATE TABLE IF NOT EXISTS states (
   id serial PRIMARY KEY,
   name VARCHAR(255)
@@ -55,23 +74,4 @@ CREATE TABLE IF NOT EXISTS locations (
     CONSTRAINT fk_zipcode
       FOREIGN KEY (zipcode_id)
       REFERENCES zipcodes (id)
-);
-
-CREATE TABLE IF NOT EXISTS categories (
-  id serial PRIMARY KEY,
-  name VARCHAR(255) UNIQUE
-);
-
-
-CREATE TABLE IF NOT EXISTS venue_categories (
-  id serial PRIMARY KEY,
-  category_id INTEGER,
-  venue_id INTEGER,
-  CONSTRAINT fk_category
-  FOREIGN KEY (category_id)
-    REFERENCES categories (id)
-  ,
-  CONSTRAINT fk_venue
-  FOREIGN KEY (venue_id)
-    REFERENCES venues (id)
 );

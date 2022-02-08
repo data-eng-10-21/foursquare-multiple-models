@@ -18,3 +18,5 @@ class VenueCategory:
         cursor.execute(query_str, (self.venue_id,))
         record = cursor.fetchone()
         return build_from_record(models.Category, record)
+
+    
