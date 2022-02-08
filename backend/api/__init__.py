@@ -19,7 +19,7 @@ def create_app(database, user):
         conn = psycopg2.connect(database = app.config['DATABASE'], user = app.config['DB_USER'])
         cursor = conn.cursor()
         venues = find_all(Venue, conn)
-        venue_objs = [venue.to_json(cursor) for venue in venues]
+        venue_objs = [venue.__dict__ for venue in venues]
         return jsonify(venue_objs)
 
     @app.route('/venues/<id>')
@@ -27,6 +27,6 @@ def create_app(database, user):
         conn = psycopg2.connect(database = app.config['DATABASE'], user = app.config['DB_USER'])
         cursor = conn.cursor()
         venue = find(Venue, id, conn)
-        return jsonify(venue.to_json(cursor))
+        return jsonify(venue.__dict__)
 
     return app

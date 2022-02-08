@@ -31,6 +31,8 @@ save(VenueCategory(venue_id = mogador.id, category_id = bar.id), conn, cursor)
 
 save(VenueCategory(venue_id = zahav.id, category_id = mediterranean.id), conn, cursor)
 save(VenueCategory(venue_id = zahav.id, category_id = bar.id), conn, cursor)
+
+# commented out as location, city and state models not written
 # def build_city_state(city_name = '', state_name = ''):
 #     state = find_or_create_by_name(State, state_name, conn, cursor)
 #     city = find_by_name(City, city_name, cursor)

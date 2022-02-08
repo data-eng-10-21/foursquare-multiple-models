@@ -24,21 +24,4 @@ class Venue:
         else:
             return build_from_record(Venue, record)
 
-    # added
-    def categories(self, cursor):
-        venues_query = """SELECT categories.* FROM categories
-        JOIN venue_categories ON
-        venue_categories.category_id = categories.id 
-        WHERE venue_categories.venue_id = %s"""
-        cursor.execute(venues_query, (self.id,))
-        venue_records = cursor.fetchall()
-        return [build_from_record(models.Category, record) 
-        for record in venue_records]
-
-    def to_json(self, cursor):
-        attr = self.__dict__
-        category_names = [category.name for category in self.categories(cursor)]
-        attr_list = list(attr.items())
-        attr_list.append(('categories', category_names))
-        return dict(attr_list)
-        
+    
