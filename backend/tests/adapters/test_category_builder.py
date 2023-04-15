@@ -15,7 +15,7 @@ response_venue = {'id': '5b2932a0f5e9d70039787cf2', 'name': 'Los Tacos Al Pastor
 
 @pytest.fixture()
 def conn():
-    test_conn = psycopg2.connect(dbname = 'foursquare_test', 
+    test_conn = psycopg2.connect(dbname = 'test_foursquare', 
             user = 'postgres', password = 'postgres')
     cursor = test_conn.cursor()
     drop_all_tables(test_conn, cursor)

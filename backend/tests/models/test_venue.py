@@ -22,8 +22,8 @@ def clean_tables():
 
 @pytest.fixture()
 def db_conn():
-    flask_app = create_app('foursquare_test', 'postgres')
-    flask_app.config['DATABASE'] = 'foursquare_test'
+    flask_app = create_app('test_foursquare', 'postgres')
+    flask_app.config['DATABASE'] = 'test_foursquare'
 
     with flask_app.app_context():
         conn = get_db()

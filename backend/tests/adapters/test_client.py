@@ -27,19 +27,22 @@ def test_full_params_returns_dictionary_of_auth_params_combined_with_additional_
 def test_request_venues_makes_request_to_foursquare_api_with_url_and_full_params():
     client = Client()
     first_venue_returned = client.request_venues()[0]
-    assert list(first_venue_returned.keys()) == ['id', 'name', 'location', 
-            'categories', 'delivery', 
-            'referralId', 'hasPerk']
+    sorted_keys = list(sorted(first_venue_returned.keys()))
+    assert  sorted_keys == ['categories', 'createdAt', 'delivery',
+                             'hasPerk', 'id', 'location', 'name', 'referralId']
 
 def test_request_venue():
     client = Client()
     venue_id = '5b2932a0f5e9d70039787cf2'
     venue_details = client.request_venue(venue_id)
-    list(venue_details.keys()) == ['id', 'name', 'contact', 'location', 
-    'canonicalUrl', 'categories', 'verified', 'stats', 'url', 
-     'price', 'likes', 'dislike', 'ok', 'rating', 'ratingColor',
-     'ratingSignals', 'delivery', 'allowMenuUrlEdit', 'beenHere', 
-     'specials', 'photos', 'reasons', 'hereNow', 'createdAt', 'tips',
-      'shortUrl', 'timeZone', 'listed', 'hours', 'popular',
-       'seasonalHours', 'defaultHours', 'pageUpdates',
-        'inbox', 'attributes', 'bestPhoto', 'colors']
+    venue_keys = sorted(list(venue_details.keys()))
+    
+    venue_keys == ['allowMenuUrlEdit', 'attributes', 'beenHere', 'bestPhoto',
+                    'canonicalUrl', 'categories', 'contact', 'createdAt',
+                      'defaultHours', 'delivery', 'dislike', 'hereNow',
+                        'hours', 'id', 'inbox', 'likes', 'listed',
+                          'location', 'name', 'ok', 'pageUpdates',
+                            'photos', 'phrases', 'popular', 'price',
+                              'rating', 'ratingColor', 'ratingSignals', 'reasons',
+                                'seasonalHours', 'shortUrl', 'stats', 'timeZone',
+                                  'tips', 'url', 'verified']

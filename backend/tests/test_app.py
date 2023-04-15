@@ -8,7 +8,7 @@ from api.lib.orm import save
 
 @pytest.fixture(scope = 'module')
 def app():
-    flask_app = create_app('foursquare_test', 'postgres')
+    flask_app = create_app('test_foursquare', 'postgres')
 
     with flask_app.app_context():
         conn = get_db()
@@ -56,8 +56,9 @@ def test_restaurants_index(app, client):
     
     assert json_response[0]['name'] == 'La Famiglia'
     assert json_response[1]['name'] == 'Cafe Mogador'
-    assert set(json_response[0].keys()) == set(['id', 'foursquare_id', 'name', 'price',
-     'rating', 'likes', 'menu_url'])
+    
+    assert set(json_response[0].keys()) == {'menu_url', 'price', 'likes', 'rating', 'categories',
+                                             'id', 'name', 'foursquare_id'}
 
 def test_restaurants_show(app, client):
     with app.app_context():
