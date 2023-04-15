@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask
+import json
 import psycopg2
 from api.models import Venue
 from api.lib.orm import find_all, find
@@ -20,13 +21,13 @@ def create_app(database, user):
         cursor = conn.cursor()
         venues = find_all(Venue, conn)
         venue_objs = [venue.to_json(cursor) for venue in venues]
-        return jsonify(venue_objs)
+        return json.dumps(venue_objs, default = str)
 
     @app.route('/venues/<id>')
     def show_venue(id):
         conn = psycopg2.connect(database = app.config['DATABASE'], user = app.config['DB_USER'])
         cursor = conn.cursor()
         venue = find(Venue, id, conn)
-        return jsonify(venue.to_json(cursor))
+        return json.dumps(venue.to_json(cursor), default = str)
 
     return app
