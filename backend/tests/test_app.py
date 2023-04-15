@@ -56,8 +56,9 @@ def test_restaurants_index(app, client):
     
     assert json_response[0]['name'] == 'La Famiglia'
     assert json_response[1]['name'] == 'Cafe Mogador'
-    assert set(json_response[0].keys()) == set(['id', 'foursquare_id', 'name', 'price',
-     'rating', 'likes', 'menu_url'])
+    
+    assert set(json_response[0].keys()) == {'menu_url', 'price', 'likes', 'rating', 'categories',
+                                             'id', 'name', 'foursquare_id'}
 
 def test_restaurants_show(app, client):
     with app.app_context():
